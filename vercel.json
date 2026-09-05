@@ -1,6 +1,6 @@
 {
   "buildCommand": "cd frontend && npm ci && npm run build",
-  "outputDirectory": "frontend/dist/frontend/browser",
+  "outputDirectory": "frontend/dist/frontend",
   "framework": null,
   "rewrites": [
     {
