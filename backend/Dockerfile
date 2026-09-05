@@ -1,7 +1,8 @@
-FROM php:8.3-cli-alpine
+FROM php:8.3-fpm-alpine
 
 RUN apk add --no-cache \
     bash \
+    nginx \
     curl \
     libpng-dev \
     libjpeg-turbo-dev \
@@ -25,7 +26,11 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8000
 

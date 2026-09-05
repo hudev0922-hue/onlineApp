@@ -3,6 +3,10 @@ set -e
 
 cd /var/www/html
 
+# Update nginx port from Railway's PORT env var
+PORT="${PORT:-8000}"
+sed -i "s/listen 8000/listen ${PORT}/" /etc/nginx/nginx.conf
+
 php artisan storage:link --force
 php artisan config:cache
 php artisan route:cache
@@ -19,5 +23,6 @@ php artisan migrate --force
 php artisan db:seed --class=AccessControlSeeder --force
 php artisan db:seed --class=PlatformAdminSeeder --force
 
-echo "Starting PHP server on port ${PORT:-8000}..."
-php -S "0.0.0.0:${PORT:-8000}" -t public
+echo "Starting PHP-FPM and Nginx on port ${PORT}..."
+php-fpm -D
+exec nginx -g 'daemon off;'
