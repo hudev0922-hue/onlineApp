@@ -3,18 +3,24 @@ set -e
 
 cd /var/www/html
 
-# Update nginx port from Railway's PORT env var
 PORT="${PORT:-8000}"
 sed -i "s/listen 8000/listen ${PORT}/" /etc/nginx/nginx.conf
 
-php artisan storage:link --force
+echo "=== DB DEBUG ==="
+echo "DB_HOST=[${DB_HOST}]"
+echo "DB_URL=[${DB_URL}]"
+echo "MYSQL_URL=[${MYSQL_URL}]"
+echo "MYSQLHOST=[${MYSQLHOST}]"
+echo "================"
+
+php artisan storage:link --force 2>/dev/null || true
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
 echo "Waiting for database..."
 for i in $(seq 1 30); do
-  php artisan db:show --counts 2>/dev/null && break || true
+  php artisan db:show --counts 2>/dev/null && echo "DB connected!" && break || true
   echo "Attempt $i/30 — retrying in 3s..."
   sleep 3
 done
