@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+cd /var/www/html
+
 php artisan storage:link --force
 php artisan config:cache
 php artisan route:cache
