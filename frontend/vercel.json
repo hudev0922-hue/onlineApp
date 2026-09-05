@@ -5,11 +5,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://REPLACE_WITH_RAILWAY_BACKEND_URL/api/:path*"
+      "destination": "https://onlineapp-production-7e9d.up.railway.app/api/:path*"
     },
     {
       "source": "/storage/:path*",
-      "destination": "https://REPLACE_WITH_RAILWAY_BACKEND_URL/storage/:path*"
+      "destination": "https://onlineapp-production-7e9d.up.railway.app/storage/:path*"
     },
     {
       "source": "/((?!api|storage).*)",
