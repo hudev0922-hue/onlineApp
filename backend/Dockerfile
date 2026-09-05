@@ -4,9 +4,12 @@ RUN apk add --no-cache \
     bash \
     curl \
     libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
     libzip-dev \
     oniguruma-dev \
     libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo \
         pdo_mysql \
@@ -14,9 +17,7 @@ RUN apk add --no-cache \
         zip \
         bcmath \
         gd \
-        fileinfo \
-        xml \
-        tokenizer
+        xml
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
