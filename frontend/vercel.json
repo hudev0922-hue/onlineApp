@@ -2,9 +2,6 @@
   "buildCommand": "npm ci && npm run build",
   "outputDirectory": "dist/frontend/browser",
   "framework": null,
-  "engines": {
-    "node": "22.x"
-  },
   "rewrites": [
     {
       "source": "/api/:path*",
