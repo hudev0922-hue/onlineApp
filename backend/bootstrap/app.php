@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->prepend(\Illuminate\Http\Middleware\HandleCors::class);
         $middleware->alias([
             'tenant.active' => \App\Core\Tenancy\Middleware\EnsureTenantIsActive::class,
             'tenant' => \App\Core\Tenancy\Middleware\ResolveTenant::class,
