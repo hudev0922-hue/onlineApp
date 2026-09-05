@@ -9,4 +9,5 @@ php artisan route:cache
 php artisan view:cache
 php artisan migrate --force
 php artisan db:seed --class=AccessControlSeeder --force
+php artisan db:seed --class=PlatformAdminSeeder --force
 php -S "0.0.0.0:${PORT:-8000}" -t public
