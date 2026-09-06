@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     libxml2-dev \
+    icu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo \
@@ -18,7 +19,8 @@ RUN apk add --no-cache \
         bcmath \
         gd \
         xml \
-        pcntl
+        pcntl \
+        intl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
