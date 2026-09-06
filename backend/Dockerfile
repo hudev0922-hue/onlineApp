@@ -1,7 +1,6 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.3-cli-alpine
 
 RUN apk add --no-cache \
-    nginx \
     bash \
     curl \
     libpng-dev \
@@ -29,8 +28,7 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache \
-    && mkdir -p /run/nginx
+    && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
 
