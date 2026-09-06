@@ -1,13 +1,17 @@
 #!/bin/sh
-
 cd /var/www/html
 
+LISTEN_PORT=${PORT:-80}
 echo "=== Madaaris Backend ==="
-echo "=== PORT=${PORT:-8000} ==="
-echo "=== PHP=$(php -v | head -1) ==="
-echo "=== public/: $(ls public/) ==="
+echo "=== PORT=${LISTEN_PORT} ==="
 
-# DB setup, migrations, seeding — all in background
+# Update Apache to listen on Railway's PORT (default 80)
+sed -i "s/Listen 80/Listen ${LISTEN_PORT}/g" /etc/apache2/ports.conf
+sed -i "s/*:80>/*:${LISTEN_PORT}>/g" /etc/apache2/sites-available/000-default.conf
+
+echo "=== Apache configured for port ${LISTEN_PORT} ==="
+
+# DB setup, migrations, seeding — all in background so Apache starts immediately
 (
     echo "[DB] Waiting for database..."
     for i in $(seq 1 60); do
@@ -24,5 +28,5 @@ echo "=== public/: $(ls public/) ==="
     echo "[DB] Setup complete!"
 ) &
 
-echo "=== Starting PHP server on 0.0.0.0:${PORT:-8000} ==="
-exec php -S "0.0.0.0:${PORT:-8000}" public/index.php
+echo "=== Starting Apache ==="
+exec apache2-foreground
