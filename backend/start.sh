@@ -25,4 +25,4 @@ echo "=== public/: $(ls public/) ==="
 ) &
 
 echo "=== Starting PHP server on 0.0.0.0:${PORT:-8000} ==="
-exec php -S "0.0.0.0:${PORT:-8000}" -t public dev-server.php
+exec php -S "0.0.0.0:${PORT:-8000}" public/index.php
