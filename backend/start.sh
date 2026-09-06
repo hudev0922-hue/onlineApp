@@ -5,6 +5,7 @@ cd /var/www/html
 echo "=== Madaaris Backend ==="
 echo "=== PORT=${PORT:-8000} ==="
 echo "=== PHP=$(php -v | head -1) ==="
+echo "=== public/: $(ls public/) ==="
 
 # DB setup, migrations, seeding — all in background
 (
