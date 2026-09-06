@@ -1,8 +1,7 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.3-cli-alpine
 
 RUN apk add --no-cache \
     bash \
-    nginx \
     curl \
     libpng-dev \
     libjpeg-turbo-dev \
@@ -18,7 +17,8 @@ RUN apk add --no-cache \
         zip \
         bcmath \
         gd \
-        xml
+        xml \
+        pcntl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -29,8 +29,6 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
-
-COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8000
 
